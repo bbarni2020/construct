@@ -104,6 +104,10 @@
 			@apply bg-red-900 outline-red-50 hover:bg-red-800;
 		}
 	}
+
+	.themed-input-light {
+		@apply border-3 border-amber-700 bg-amber-900 fill-amber-50 p-2 text-sm ring-amber-900 placeholder:text-amber-700 active:ring-3;
+	}
 }
 
 @layer utilities {

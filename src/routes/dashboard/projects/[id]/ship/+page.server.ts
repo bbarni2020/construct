@@ -19,7 +19,8 @@ export async function load({ params, locals }) {
 			url: project.url,
 			createdAt: project.createdAt,
 			status: project.status,
-			timeSpent: sql<number>`COALESCE(SUM(${devlog.timeSpent}), 0)`
+			timeSpent: sql<number>`COALESCE(SUM(${devlog.timeSpent}), 0)`,
+			devlogCount: sql<number>`COALESCE(COUNT(${devlog.id}), 0)`
 		})
 		.from(project)
 		.leftJoin(devlog, and(eq(project.id, devlog.projectId), eq(devlog.deleted, false)))
@@ -37,6 +38,11 @@ export async function load({ params, locals }) {
 		throw error(404);
 	}
 
+	// Make sure it has actual devlogs before shipping
+	if (queriedProject.devlogCount == 0) {
+		return error(400, { message: 'project has no devlogs' });
+	}
+
 	return {
 		project: queriedProject
 	};
@@ -51,8 +57,13 @@ export const actions = {
 		const id: number = parseInt(params.id);
 
 		const queriedProject = await db
-			.select()
+			.select({
+				id: project.id,
+				timeSpent: sql<number>`COALESCE(SUM(${devlog.timeSpent}), 0)`,
+				devlogCount: sql<number>`COALESCE(COUNT(${devlog.id}), 0)`
+			})
 			.from(project)
+			.leftJoin(devlog, and(eq(project.id, devlog.projectId), eq(devlog.deleted, false)))
 			.where(
 				and(
 					eq(project.id, id),
@@ -64,14 +75,18 @@ export const actions = {
 			.get();
 
 		if (!queriedProject) {
-			throw error(404);
+			return error(404, { message: 'project not found' });
 		}
 
-		// TODO: change when shipping is properly implemented
+		// Make sure it has actual devlogs before shipping
+		if (queriedProject.devlogCount == 0) {
+			return error(400, { message: 'project has no devlogs' });
+		}
+
 		await db
 			.update(project)
 			.set({
-				status: 'finalized'
+				status: 'submitted'
 			})
 			.where(
 				and(

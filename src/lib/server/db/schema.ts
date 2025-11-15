@@ -9,6 +9,7 @@ export const user = sqliteTable('user', {
 	status: text('status', { enum: ['trusted', 'default', 'warned', 'banned'] })
 		.notNull()
 		.default('default'), // User status
+	// TODO: implement this properly everywhere
 
 	hasSessionAuditLogs: integer('has_session_audit_logs', { mode: 'boolean' })
 		.notNull()
