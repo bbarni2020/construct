@@ -1,10 +1,10 @@
 <script lang="ts">
-	import CharCountedTextarea from '../../../../lib/components/CharCountedTextarea.svelte';
+	import CharCountedTextarea from '$lib/components/CharCountedTextarea.svelte';
 
 	import { SquarePen, ExternalLink, Trash, Ship, Lock } from '@lucide/svelte';
 	import relativeDate from 'tiny-relative-date';
 	import type { PageProps } from './$types';
-	import Devlog from './Devlog.svelte';
+	import Devlog from '$lib/components/Devlog.svelte';
 	import { ALLOWED_IMAGE_TYPES, ALLOWED_MODEL_EXTS, MAX_UPLOAD_SIZE } from './config';
 	import { projectStatuses } from '$lib/utils';
 	import { enhance } from '$app/forms';

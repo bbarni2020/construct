@@ -4,19 +4,6 @@ import { error } from '@sveltejs/kit';
 import { eq, and, sql, ne, inArray } from 'drizzle-orm';
 import type { Actions } from './$types';
 
-const PROJECT_FORMAT = {
-	project: {
-		id: project.id,
-		name: project.name,
-		description: project.description,
-		url: project.url,
-		createdAt: project.createdAt,
-		status: project.status
-	},
-	timeSpent: sql<number>`COALESCE(SUM(${devlog.timeSpent}), 0)`,
-	devlogCount: sql<number>`COALESCE(COUNT(${devlog.id}), 0)`
-};
-
 export async function load({ locals }) {
 	if (!locals.user) {
 		throw error(500);
@@ -27,12 +14,7 @@ export async function load({ locals }) {
 	}
 
 	// TODO: make the database not stupid so it doesn't have to left join every single devlog
-	const projects = await db
-		.select(PROJECT_FORMAT)
-		.from(project)
-		.leftJoin(devlog, and(eq(project.id, devlog.projectId), eq(devlog.deleted, false)))
-		.where(and(eq(project.deleted, false), eq(project.status, 'submitted')))
-		.groupBy(project.id);
+	const projects = await getProjects(['submitted'], [], []);
 
 	const allProjects = await db
 		.select({
@@ -81,19 +63,7 @@ export const actions = {
 			return parseInt(userId.toString());
 		});
 
-		const projects = await db
-			.select(PROJECT_FORMAT)
-			.from(project)
-			.leftJoin(devlog, and(eq(project.id, devlog.projectId), eq(devlog.deleted, false)))
-			.where(
-				and(
-					eq(project.deleted, false),
-					statusFilter.length > 0 ? inArray(project.status, statusFilter) : undefined,
-					projectFilter.length > 0 ? inArray(project.id, projectFilter) : undefined,
-					userFilter.length > 0 ? inArray(project.userId, userFilter) : undefined
-				)
-			)
-			.groupBy(project.id);
+		const projects = await getProjects(statusFilter, projectFilter, userFilter);
 
 		return {
 			projects,
@@ -105,3 +75,39 @@ export const actions = {
 		};
 	}
 } satisfies Actions;
+
+async function getProjects(
+	statusFilter: (typeof project.status._.data)[],
+	projectFilter: number[],
+	userFilter: number[]
+) {
+	return await db
+		.select({
+			project: {
+				id: project.id,
+				name: project.name,
+				description: project.description,
+				url: project.url,
+				createdAt: project.createdAt,
+				status: project.status
+			},
+			user: {
+				id: user.id,
+				name: user.name
+			},
+			timeSpent: sql<number>`COALESCE(SUM(${devlog.timeSpent}), 0)`,
+			devlogCount: sql<number>`COALESCE(COUNT(${devlog.id}), 0)`
+		})
+		.from(project)
+		.leftJoin(devlog, and(eq(project.id, devlog.projectId), eq(devlog.deleted, false)))
+		.leftJoin(user, eq(user.id, project.userId))
+		.where(
+			and(
+				eq(project.deleted, false),
+				statusFilter.length > 0 ? inArray(project.status, statusFilter) : undefined,
+				projectFilter.length > 0 ? inArray(project.id, projectFilter) : undefined,
+				userFilter.length > 0 ? inArray(project.userId, userFilter) : undefined
+			)
+		)
+		.groupBy(project.id);
+}

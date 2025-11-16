@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import Devlog from '../../../Devlog.svelte';
+	import Devlog from '$lib/components/Devlog.svelte';
 	import type { PageProps } from './$types';
 	import { Trash } from '@lucide/svelte';
 

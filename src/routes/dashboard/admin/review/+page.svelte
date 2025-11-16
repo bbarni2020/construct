@@ -95,6 +95,23 @@
 		</div>
 		<div class="themed-box grow p-3 lg:min-w-[30%]">
 			<h2 class="text-xl font-bold">Leaderboard</h2>
+			<div class="w-full overflow-scroll">
+				Coming soon!
+				<!-- <table class="w-full">
+					<thead>
+						<tr>
+							<th align="left">a</th>
+							<th align="right">a</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td align="left">a</td>
+							<td align="right">a</td>
+						</tr>
+					</tbody>
+				</table> -->
+			</div>
 		</div>
 	</div>
 
@@ -120,13 +137,14 @@
 				>
 					<a
 						class="absolute inset-0 z-1"
-						href={`/dashboard/projects/${project.project.id}`}
+						href={`/dashboard/admin/review/${project.project.id}`}
 						aria-label="project"
 					>
 					</a>
 					<h1 class="flex flex-row gap-1 text-xl font-semibold">
 						<span class="grow truncate">{project.project.name}</span>
 					</h1>
+					<p class="text-sm">by <a class="underline relative z-2" href={`/dashboard/users/${project.user?.id}`}>{project.user?.name}</a></p>
 					<p class="grow">{project.project.description}</p>
 					{#if project.project.url && project.project.url.length > 0}
 						<div class="my-2 flex">

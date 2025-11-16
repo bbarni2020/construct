@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import CharCountedTextarea from '$lib/components/CharCountedTextarea.svelte';
-	import Devlog from '../../../Devlog.svelte';
+	import Devlog from '$lib/components/Devlog.svelte';
 	import type { PageProps } from './$types';
 
 	let { data, form, params }: PageProps = $props();

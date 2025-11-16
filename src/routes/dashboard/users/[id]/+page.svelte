@@ -1,7 +1,7 @@
 <script lang="ts">
 	import relativeDate from 'tiny-relative-date';
 	import { Calendar, ExternalLink } from '@lucide/svelte';
-	import Devlog from '../../projects/[id]/Devlog.svelte';
+	import Devlog from '$lib/components/Devlog.svelte';
 
 	let { data } = $props();
 </script>
