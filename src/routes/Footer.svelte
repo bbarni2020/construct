@@ -7,8 +7,7 @@
 	<div class="">
 		<p class="text-center">
 			Made with 💛 by <a href="https://hackclub.com" class="underline">Hack Clubbers</a> <br /> Disclaimer:
-			this isn't a real YSWS if you couldn't tell, just a template site for one which I'm not allowed
-			to leak
+			this isn't a real YSWS, just a template site for one which I'm not allowed to leak
 		</p>
 	</div>
 </footer>

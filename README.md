@@ -1,16 +1,14 @@
-# Rocket
+# Framework
 
-Continuation of last week's project: https://github.com/ArcaEge/pumpkin
+Continuation of last week's project: https://github.com/ArcaEge/rocket
 
 A template site for a mysterious Hack Club YSWS event, I'll be reusing the same site design but with different content.
 
 <!-- The site is available at: https://traffic.arcaege.dev/ -->
 
-Built with SvelteKit, deployed on Cloudflare Workers (because free!!! would highly recommend for small projects like this)
+Built with SvelteKit, deployed with Docker (auto-builds container and publishes to GitHub packages!)
 
 ## Developing
-
-I wouldn't recommend using anything other than npm as yarn didn't build on Cloudflare Workers for some reason.
 
 Copy `.env.example` to `.env` and update the stuff inside. When testing locally, Slack will redirect you to a HTTPS localhost URL and you'll need to change it to HTTP (this is because Slack doesn't allow setting the redirect URL to a HTTP URL).
 

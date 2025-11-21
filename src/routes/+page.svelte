@@ -212,10 +212,9 @@
 
 <div class="flex w-full flex-col items-center justify-center px-10 lg:flex-row">
 	<div class="mt-40">
-		<h1 class="font-hero text-4xl sm:text-5xl md:text-6xl">Rocket</h1>
+		<h1 class="font-hero text-4xl sm:text-5xl md:text-6xl">Framework</h1>
 		<p class="my-3 text-xl font-medium">
-			You ship: rocket design<br />
-			We ship: very cool rocket
+			Design a Framework expansion card, get it manufactured!
 		</p>
 		{#if data.loggedIn}
 			<Button text="Go to dashboard" href="/dashboard" />
