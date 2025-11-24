@@ -16,7 +16,7 @@
 	--background-color-quarternary: #94857d;
 	--font-color: #f3dcc6;
 
-	/* --color-primary-50: #fffaeb;
+	--color-primary-50: #fffaeb;
 	--color-primary-100: #fff1c6;
 	--color-primary-200: #fee389;
 	--color-primary-300: #fecb3e;
@@ -26,19 +26,7 @@
 	--color-primary-700: #b64e07;
 	--color-primary-800: #943c0c;
 	--color-primary-900: #79320e;
-	--color-primary-950: #461802; */
-
-	--color-primary-50: #f7f7fb;
-	--color-primary-100: #f0eff8;
-	--color-primary-200: #e4e2f2;
-	--color-primary-300: #cdcae8;
-	--color-primary-400: #b3acd9;
-	--color-primary-500: #978ac8;
-	--color-primary-600: #7963b2;
-	--color-primary-700: #725ca5;
-	--color-primary-800: #5f4d8a;
-	--color-primary-900: #504171;
-	--color-primary-950: #32294c;
+	--color-primary-950: #461802;
 }
 
 @layer base {
