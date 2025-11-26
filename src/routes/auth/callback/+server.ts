@@ -70,51 +70,62 @@ export async function GET(event) {
 
 	const userDataJSON = await userDataRes.json();
 
-	// const slackId = openidConnectDataJSON['https://slack.com/user_id'];
-	const profilePic =
-		'https://hc-cdn.hel1.your-objectstorage.com/s/v3/e4d4bc77e7a958820efea2ee55ebddf75d85993b_image.png'; // TODO: change when IDV properly implements slack
 	const {
 		id,
-		first_name,
-		last_name,
-		slack_id
-		// ysws_eligible,
+		slack_id,
+		ysws_eligible
 		// verification_status
 	}: {
 		id: string;
-		first_name: string;
-		last_name: string;
 		slack_id: string;
 		ysws_eligible: boolean;
-		verification_status: string;
-	} = userDataJSON['identity']; // TODO: make this get the user's slack handle
+		// verification_status: string;
+	} = userDataJSON['identity'];
 
-	// TODO: Check Hackatime API if they're banned and identity if they're verified
-	// https://identity.hackclub.com/api/external/check?slack_id=
+	// Get slack data
+	const slackProfileURL = new URL('https://slack.com/api/users.info');
+	slackProfileURL.searchParams.set('user', slack_id);
+
+	const slackProfileBody = new URLSearchParams();
+	slackProfileBody.append('token', env.SLACK_BOT_TOKEN ?? '');
+
+	const slackProfileRes = await fetch(slackProfileURL, {
+		method: 'POST',
+		body: slackProfileBody
+	});
+
+	const slackProfileResJSON = await slackProfileRes.json();
+
+	if (!slackProfileResJSON.ok) {
+		const redirectURL = new URL(`${url.protocol}//${url.host}/auth/failed`);
+		return redirect(302, redirectURL);
+	}
+	
+	const slackProfile = slackProfileResJSON['user'];
+
+	const profilePic = slackProfile['profile']['image_1024'];
+	const username = slackProfile['profile']['display_name'];
 
 	// Check Hackatime trust
-	// TODO: change when IDV properly implements slack
-	const hackatimeTrust = 'blue';
-	// const hackatimeTrust = (
-	// 	await (
-	// 		await fetch(`https://hackatime.hackclub.com/api/v1/users/${slackId}/trust_factor`)
-	// 	).json()
-	// )['trust_level'];
+	const hackatimeTrust = (
+		await (
+			await fetch(`https://hackatime.hackclub.com/api/v1/users/${slack_id}/trust_factor`)
+		).json()
+	)['trust_level'];
 
-	// if (!hackatimeTrust) {
-	// 	return error(418, {
-	// 		message: 'failed to fetch hackatime trust factor, please try again later'
-	// 	});
-	// } else if (hackatimeTrust === 'red') {
-	// 	// Prevent login
-	// 	return redirect(302, 'https://fraud.land');
-	// }
+	if (!hackatimeTrust) {
+		return error(418, {
+			message: 'failed to fetch hackatime trust factor, please try again later'
+		});
+	} else if (hackatimeTrust === 'red') {
+		// Prevent login
+		return redirect(302, 'https://fraud.land');
+	}
 
-	// TODO: uncomment once I get verified
-	// if (!ysws_eligible) {
-	// 	const redirectURL = new URL(`${url.protocol}//${url.host}/auth/ineligible`);
-	// 	return redirect(302, redirectURL);
-	// }
+	if (!ysws_eligible) {
+		const redirectURL = new URL(`${url.protocol}//${url.host}/auth/ineligible`);
+		return redirect(302, redirectURL);
+	}
 
 	// Create user if doesn't exist
 	let [databaseUser] = await db.select().from(user).where(eq(user.idvId, id)).limit(1);
@@ -124,7 +135,7 @@ export async function GET(event) {
 		await db
 			.update(user)
 			.set({
-				name: first_name + ' ' + last_name,
+				name: username,
 				profilePicture: profilePic,
 				lastLoginAt: new Date(Date.now()),
 				hackatimeTrust
@@ -135,7 +146,7 @@ export async function GET(event) {
 		await db.insert(user).values({
 			idvId: id,
 			slackId: slack_id,
-			name: first_name + ' ' + last_name,
+			name: username,
 			profilePicture: profilePic,
 			createdAt: new Date(Date.now()),
 			lastLoginAt: new Date(Date.now()),
