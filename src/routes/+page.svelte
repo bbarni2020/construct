@@ -216,8 +216,14 @@
 <OrpheusFlag />
 
 <div class="flex w-full flex-col items-center justify-center px-10 lg:flex-row">
-	<div class="mt-40">
-		<h1 class="font-hero text-4xl sm:text-5xl md:text-6xl">Construct</h1>
+	<div class="mt-30">
+		<div class="flex flex-row">
+			<a class="mb-5 flex h-7 flex-row items-center gap-2 hover:opacity-50 transition-opacity shrink pr-2" href="https://hackclub.com">
+				<img src="https://assets.hackclub.com/icon-rounded.svg" alt="Hack Club logo" class="h-7" />
+				<p class="text-lg font-semibold"><span class="text-hc-red-500">Hack Club</span> presents...</p>
+			</a>
+		</div>
+		<h1 class="font-hero text-4xl text-primary-500 sm:text-5xl md:text-6xl">Construct</h1>
 		<p class="my-3 text-xl font-medium">Spend 50 hours doing CAD projects, get a 3D printer!</p>
 		{#if data.loggedIn}
 			<Button text="Go to dashboard" href="/dashboard" />

@@ -4,8 +4,37 @@
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
 
+@font-face {
+	font-family: 'Phantom Sans';
+	src:
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff') format('woff'),
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Phantom Sans';
+	src:
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff') format('woff'),
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Phantom Sans';
+	src:
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff') format('woff'),
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
 @theme {
 	--font-hero: 'Press Start 2P', var(--font-sans);
+	--font-hc: 'Phantom Sans', var(--font-sans);
 	--font-sans:
 		'Sora', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
 		'Segoe UI Symbol', 'Noto Color Emoji';
@@ -27,6 +56,114 @@
 	--color-primary-800: #943c0c;
 	--color-primary-900: #79320e;
 	--color-primary-950: #461802;
+
+	/* --color-primary-50: #fff7ed;
+	--color-primary-100: #ffecd4;
+	--color-primary-200: #ffd5a8;
+	--color-primary-300: #ffb671;
+	--color-primary-400: #ff8c37;
+	--color-primary-500: #fe6c11;
+	--color-primary-600: #ef5107;
+	--color-primary-700: #c63a08;
+	--color-primary-800: #9d2f0f;
+	--color-primary-900: #7e2910;
+	--color-primary-950: #441106; */
+
+	--color-hc-red-50: #fef2f2;
+	--color-hc-red-100: #fee5e6;
+	--color-hc-red-200: #fccfd3;
+	--color-hc-red-300: #faa7ae;
+	--color-hc-red-400: #f67685;
+	--color-hc-red-500: #ec3750;
+	--color-hc-red-600: #da2446;
+	--color-hc-red-700: #b8183a;
+	--color-hc-red-800: #9a1737;
+	--color-hc-red-900: #841735;
+	--color-hc-red-950: #490818;
+
+	--color-hc-orange-50: #fff7ed;
+	--color-hc-orange-100: #ffecd4;
+	--color-hc-orange-200: #ffd5a8;
+	--color-hc-orange-300: #ffb671;
+	--color-hc-orange-400: #ff8c37;
+	--color-hc-orange-500: #fe6c11;
+	--color-hc-orange-600: #ef5107;
+	--color-hc-orange-700: #c63a08;
+	--color-hc-orange-800: #9d2f0f;
+	--color-hc-orange-900: #7e2910;
+	--color-hc-orange-950: #441106;
+
+	--color-hc-yellow-50: #fdfde9;
+	--color-hc-yellow-100: #fdfbc4;
+	--color-hc-yellow-200: #fbf38d;
+	--color-hc-yellow-300: #f9e54b;
+	--color-hc-yellow-400: #f5d31a;
+	--color-hc-yellow-500: #f1c40f;
+	--color-hc-yellow-600: #c59009;
+	--color-hc-yellow-700: #9d670b;
+	--color-hc-yellow-800: #825211;
+	--color-hc-yellow-900: #6f4314;
+	--color-hc-yellow-950: #412307;
+
+	--color-hc-green-50: #ecfdf6;
+	--color-hc-green-100: #d0fbe8;
+	--color-hc-green-200: #a6f4d5;
+	--color-hc-green-300: #6ce9c0;
+	--color-hc-green-400: #33d6a6;
+	--color-hc-green-500: #0dbc8e;
+	--color-hc-green-600: #039874;
+	--color-hc-green-700: #027a60;
+	--color-hc-green-800: #05604d;
+	--color-hc-green-900: #054f41;
+	--color-hc-green-950: #012d25;
+
+	--color-hc-cyan-50: #effbfc;
+	--color-hc-cyan-100: #d6f1f7;
+	--color-hc-cyan-200: #b1e2f0;
+	--color-hc-cyan-300: #5bc0de;
+	--color-hc-cyan-400: #3faed1;
+	--color-hc-cyan-500: #2391b7;
+	--color-hc-cyan-600: #20749a;
+	--color-hc-cyan-700: #205f7e;
+	--color-hc-cyan-800: #224f68;
+	--color-hc-cyan-900: #214358;
+	--color-hc-cyan-950: #102a3c;
+
+	--color-hc-blue-50: #f2f7fd;
+	--color-hc-blue-100: #e3eefb;
+	--color-hc-blue-200: #c1dcf6;
+	--color-hc-blue-300: #8bc0ee;
+	--color-hc-blue-400: #4d9fe3;
+	--color-hc-blue-500: #338eda;
+	--color-hc-blue-600: #1867b1;
+	--color-hc-blue-700: #145290;
+	--color-hc-blue-800: #154777;
+	--color-hc-blue-900: #173c63;
+	--color-hc-blue-950: #0f2742;
+
+	--color-hc-purple-50: #fbf6fe;
+	--color-hc-purple-100: #f6eafd;
+	--color-hc-purple-200: #efd9fb;
+	--color-hc-purple-300: #e3bbf7;
+	--color-hc-purple-400: #d28ff1;
+	--color-hc-purple-500: #c064e8;
+	--color-hc-purple-600: #a633d6;
+	--color-hc-purple-700: #9632be;
+	--color-hc-purple-800: #7e2d9c;
+	--color-hc-purple-900: #67267d;
+	--color-hc-purple-950: #480f5c;
+
+	--color-hc-gray-50: #f5f7f8;
+	--color-hc-gray-100: #ecf1f3;
+	--color-hc-gray-200: #dde4e8;
+	--color-hc-gray-300: #c7d3da;
+	--color-hc-gray-400: #b0bec9;
+	--color-hc-gray-500: #9baab9;
+	--color-hc-gray-600: #8492a6;
+	--color-hc-gray-700: #717d91;
+	--color-hc-gray-800: #5d6776;
+	--color-hc-gray-900: #4f5760;
+	--color-hc-gray-950: #2e3238;
 }
 
 @layer base {
@@ -94,7 +231,8 @@
 			@apply gap-1 rounded-lg p-2 hover:outline-3 focus:outline-3;
 		}
 
-		&:disabled, &.disabled {
+		&:disabled,
+		&.disabled {
 			@apply cursor-not-allowed opacity-80 hover:outline-0;
 		}
 
