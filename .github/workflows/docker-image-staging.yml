@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: ['main']
+    branches: ['staging']
 
 jobs:
   build:
@@ -15,4 +15,4 @@ jobs:
         with:
           image_name: ${{ github.repository }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          image_tag: production
+          image_tag: staging

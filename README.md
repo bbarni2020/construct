@@ -57,10 +57,10 @@ services:
     env_file:
       - .env
     pull_policy: always
-    image: ghcr.io/hackclub/construct:latest
+    image: ghcr.io/hackclub/construct:production
 networks: {}
 volumes:
   constructdb:
 ```
 
-Use the `staging` image tag instead of `latest` for the staging environment.
+Use the `staging` image tag instead of `production` for the staging environment.
