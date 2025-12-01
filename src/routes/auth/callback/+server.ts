@@ -156,7 +156,7 @@ export async function GET(event) {
 	// Create user if doesn't exist
 	let [databaseUser] = await db.select().from(user).where(eq(user.idvId, id)).limit(1);
 
-	if (databaseUser.trust === 'red') {
+	if (databaseUser?.trust === 'red') {
 		// Prevent login
 		return redirect(302, 'https://fraud.land');
 	}
