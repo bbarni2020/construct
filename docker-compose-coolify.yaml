@@ -3,8 +3,23 @@ services:
     restart: always
     expose:
       - 3000
-    env_file:
-      - .env
     pull_policy: always
+    networks:
+      - coolify
     image: ghcr.io/hackclub/construct:production
-networks: {}
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://localhost:3000', (r) => process.exit(r.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  coolify:
+    external: true
