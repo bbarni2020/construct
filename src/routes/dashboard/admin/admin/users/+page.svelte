@@ -69,6 +69,7 @@
 					</code>
 					<p>Hackatime: {user.hackatimeTrust}</p>
 					<p>Trust: {user.trust}</p>
+					<p>{user.clay} clay, {user.brick} brick, {user.shopScore} market</p>
 				</div>
 			{/each}
 		</div>
