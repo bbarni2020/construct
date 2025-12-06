@@ -3,10 +3,7 @@ import * as Sentry from '@sentry/sveltekit';
 import { PUBLIC_ENV } from '$env/static/public';
 
 Sentry.init({
-	dsn:
-		PUBLIC_ENV == 'staging' || PUBLIC_ENV == 'production'
-			? 'https://7caab434460a1585f4c87baa1a692427@o40609.ingest.us.sentry.io/4510461147742208'
-			: undefined,
+	dsn: 'https://7caab434460a1585f4c87baa1a692427@o40609.ingest.us.sentry.io/4510461147742208',
 
 	tracesSampleRate: 1.0,
 
@@ -14,7 +11,7 @@ Sentry.init({
 	enableLogs: true,
 
 	// Environment
-	environment: PUBLIC_ENV,
+	environment: PUBLIC_ENV ?? 'dev',
 
 	// This sets the sample rate to be 10%. You may want this to be 100% while
 	// in development and sample at a lower rate in production
