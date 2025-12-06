@@ -57,4 +57,5 @@
 			<span class="text-xs text-primary-400 md:text-sm">SECS</span>
 		</div>
 	</div>
+	<a href="/" class="mt-10 underline">Go back home</a>
 </div>

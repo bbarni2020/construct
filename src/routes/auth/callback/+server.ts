@@ -13,24 +13,12 @@ import {
 
 export async function GET(event) {
 	const url = event.url;
-	// const cookies = event.cookies;
-
-	// const urlState = url.searchParams.get('state');
 	const code = url.searchParams.get('code');
 
 	// !urlState || !code
 	if (!code) {
-		return error(418);
+		return error(400, { message: 'no oauth code, hmm what happened here' });
 	}
-
-	// const cookieState = cookies.get('oauth_state');
-
-	// if (!cookieState || cookieState !== urlState) {
-	// 	const redirectURL = new URL(`${url.protocol}//${url.host}/auth/failed`);
-	// 	return redirect(302, redirectURL);
-	// }
-
-	// cookies.delete('oauth_state', { path: '/' });
 
 	// Get token
 	const tokenURL = new URL(`https://${env.IDV_DOMAIN}/oauth/token`);
@@ -48,8 +36,7 @@ export async function GET(event) {
 	});
 
 	if (!tokenRes.ok) {
-		const redirectURL = new URL(`${url.protocol}//${url.host}/auth/failed`);
-		return redirect(302, redirectURL);
+		return redirect(302, '/auth/failed');
 	}
 
 	const token = (await tokenRes.json()).access_token;
@@ -64,8 +51,7 @@ export async function GET(event) {
 	});
 
 	if (!userDataRes.ok) {
-		const redirectURL = new URL(`${url.protocol}//${url.host}/auth/failed`);
-		return redirect(302, redirectURL);
+		return redirect(302, '/auth/failed');
 	}
 
 	const userDataJSON = await userDataRes.json();
@@ -99,8 +85,7 @@ export async function GET(event) {
 	if (!slackProfileResJSON.ok) {
 		console.error('Failed to fetch user profile');
 
-		const redirectURL = new URL(`${url.protocol}//${url.host}/auth/failed`);
-		return redirect(302, redirectURL);
+		return redirect(302, '/auth/failed');
 	}
 
 	const slackProfile = slackProfileResJSON['user'];
@@ -128,14 +113,11 @@ export async function GET(event) {
 		if (!channelMembersResJSON.ok) {
 			console.error('Failed to fetch channel members');
 
-			const redirectURL = new URL(`${url.protocol}//${url.host}/auth/failed`);
-			return redirect(302, redirectURL);
+			return redirect(302, '/auth/failed');
 		}
 
 		if (!channelMembersResJSON['members'].includes(slack_id)) {
-			// redirect to funny url
-			const redirectURL = new URL(`https://www.youtube.com/watch?v=xvFZjo5PgG0`);
-			return redirect(302, redirectURL);
+			return redirect(302, '/countdown');
 		}
 	}
 
@@ -147,7 +129,8 @@ export async function GET(event) {
 	)['trust_level'];
 
 	if (!hackatimeTrust) {
-		return error(418, {
+		console.error()
+		return error(503, {
 			message: 'failed to fetch hackatime trust factor, please try again later'
 		});
 	} else if (hackatimeTrust === 'red') {
@@ -156,8 +139,7 @@ export async function GET(event) {
 	}
 
 	if (!ysws_eligible) {
-		const redirectURL = new URL(`${url.protocol}//${url.host}/auth/ineligible`);
-		return redirect(302, redirectURL);
+		return redirect(302, '/auth/ineligible');
 	}
 
 	// Create user if doesn't exist
@@ -218,6 +200,5 @@ export async function GET(event) {
 		new Date(Date.now() + DAY_IN_MS * SESSION_EXPIRY_DAYS)
 	);
 
-	const redirectURL = new URL(`${url.protocol}//${url.host}/dashboard`);
-	return redirect(302, redirectURL);
+	return redirect(302, '/dashboard');
 }
