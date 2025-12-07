@@ -1,17 +1,14 @@
-import { PUBLIC_ENV } from '$env/static/public';
+import { env } from '$env/dynamic/private';
 import * as Sentry from '@sentry/sveltekit';
 
 Sentry.init({
-	dsn:
-		PUBLIC_ENV == 'staging' || PUBLIC_ENV == 'production'
-			? 'https://7caab434460a1585f4c87baa1a692427@o40609.ingest.us.sentry.io/4510461147742208'
-			: undefined,
+	dsn: 'https://7caab434460a1585f4c87baa1a692427@o40609.ingest.us.sentry.io/4510461147742208',
 
 	integrations: [Sentry.consoleLoggingIntegration({ levels: ['log', 'warn', 'error'] })],
 
 	tracesSampleRate: 1.0,
 
-	environment: PUBLIC_ENV,
+	environment: env.PUBLIC_ENV ?? 'dev',
 
 	// Enable logs to be sent to Sentry
 	enableLogs: true
@@ -20,4 +17,4 @@ Sentry.init({
 	// spotlight: import.meta.env.DEV,
 });
 
-export const handleError = Sentry.handleErrorWithSentry();
+// export const handleError = Sentry.handleErrorWithSentry();

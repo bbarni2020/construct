@@ -25,9 +25,9 @@
 />
 <p class="mt-3">
 	{#if data.project.timeSpent < 120}
-		You need at least 2h to ship
+		You need at least 2h to ship. <a href="edit" class="underline">Edit?</a>
 	{:else if data.project.description == '' || data.project.url == ''}
-		Project must have a description and Printables URL to ship
+		Project must have a description and Printables URL to ship. <a href="edit" class="underline">Edit?</a>
 	{:else}
 		Are you sure you want to ship "{data.project.name}"? You won't be able to edit it or journal
 		again unless it gets rejected.
@@ -44,7 +44,7 @@
 		};
 	}}
 >
-	<a href={`/dashboard/projects/${data.project.id}`} class="button sm primary">Cancel</a>
+	<a href="./" class="button sm primary">Cancel</a>
 	<button
 		class="button sm orange"
 		disabled={formPending ||

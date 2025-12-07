@@ -25,7 +25,7 @@
 				<img
 					src={user.profilePicture}
 					alt="user profile"
-					class="h-45 rounded-xl border-4 border-primary-800 shadow-lg"
+					class="h-45 rounded-xl border-4 border-primary-800 shadow-lg aspect-square"
 				/>
 			</div>
 

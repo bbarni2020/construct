@@ -6,6 +6,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	plugins: [
 		sentrySvelteKit({
+			adapter: 'node',
 			sourceMapsUploadOptions: {
 				org: 'hack-club',
 				project: 'construct',
