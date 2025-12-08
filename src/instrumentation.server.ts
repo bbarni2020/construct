@@ -2,7 +2,10 @@ import { env } from '$env/dynamic/private';
 import * as Sentry from '@sentry/sveltekit';
 
 Sentry.init({
-	dsn: 'https://7caab434460a1585f4c87baa1a692427@o40609.ingest.us.sentry.io/4510461147742208',
+	dsn:
+		env.PUBLIC_ENV && env.PUBLIC_ENV != 'dev'
+			? 'https://7caab434460a1585f4c87baa1a692427@o40609.ingest.us.sentry.io/4510461147742208'
+			: '',
 
 	integrations: [Sentry.consoleLoggingIntegration({ levels: ['log', 'warn', 'error'] })],
 
