@@ -269,42 +269,70 @@
 
 <Rules idvDomain={data.idvDomain} />
 
-<div class="mt-20 flex flex-col items-center justify-center px-10">
-	<h1 class="mb-3 text-center text-2xl font-bold sm:text-4xl">Frequently asked questions</h1>
-	<div class="w-full max-w-2xl">
-		<Accordion text="Is this free?">
-			<p>
-				Yes! This program is entirely funded by <a href="https://hackclub.com" class="underline">
-					Hack Club
-				</a>, a US-based 501(c)(3) charity helping teens learn how to design and code, with sponsors
-				such as <a href="https://github.com" class="underline">GitHub</a>.
-			</p>
-		</Accordion>
-		<Accordion text="What can I make?">
-			<p>
-				Any reasonable CAD project is fine, get creative! However, you must use one of the <a
-					href="/approved-editors"
-					class="underline">approved editors</a
-				>.
-			</p>
-		</Accordion>
-		<Accordion text="What are the requirements to get a 3D printer?">
-			<p>You must ship at least 40 hours' worth of projects by the end of the event.</p>
-		</Accordion>
-		<Accordion text="What are the requirements to participate?">
-			<p>
-				You must be between the ages 13-18 and have verified your identity on our <a
-					href={`https://${data.idvDomain}`}
-					class="underline"
-				>
-					identity platform
-				</a>.
-			</p>
-		</Accordion>
-	</div>
-</div>
+	<div class="mt-20 flex flex-col items-center justify-center px-10">
+		<h1 class="mb-3 text-center text-2xl font-bold sm:text-4xl">Frequently asked questions</h1>
+		<div class="w-full max-w-2xl">
+			<Accordion text="Is this free?">
+				<p>
+					Yes! This program is entirely funded by <a href="https://hackclub.com" class="underline">
+						Hack Club
+					</a>, a US-based 501(c)(3) charity helping teens learn how to design and code, with sponsors
+					such as <a href="https://github.com" class="underline">GitHub</a>.
+				</p>
+			</Accordion>
 
-<div class="mt-15 mb-30 flex flex-col items-center justify-center gap-5 px-10">
+			<Accordion text="What can I make?">
+				<p>
+					Anything created with 3D modelling CAD software! Keychains, models, art, or even functional parts. You can include hardware (bearings, motors, PCBs) at your own cost. However, you must use one of the <a href="/approved-editors" class="underline">approved editors</a>.
+				</p>
+			</Accordion>
+
+			<Accordion text="What are the requirements to get a 3D printer?">
+				<p>Accumulate 40 clay (earned at 1 per hour journaled). That's enough to buy a base 3D printer.</p>
+			</Accordion>
+
+			<Accordion text="What are the requirements to participate?">
+				<p>
+					You must be 13-18 years old and have verified your identity on our <a
+						href={`https://${data.idvDomain}`}
+						class="underline"
+					>
+						identity platform
+					</a>. You also need to be part of the <a href="https://hackclub.com/slack/" class="underline">Hack Club Slack</a>.
+				</p>
+			</Accordion>
+			<Accordion text="How do I earn prizes?">
+				<p>
+					Earn 1 clay bag per hour you work and journal. Clay is the currency to buy a 3D printer—the cheapest is 40 clay! After you buy a printer, you'll earn 12 bricks per hour instead, which you can use to upgrade or buy from the Brick Shop.
+				</p>
+			</Accordion>
+			<Accordion text="How do I track my time?">
+				<p>
+					Use the journaling feature on your project page. Each entry caps at 2 hours, and you can only log time that's actually elapsed since your last entry. If you lose hours, we can't recover them.
+				</p>
+			</Accordion>
+			<Accordion text="Do I have to build my project?">
+				<p class="mb-2">
+					Yes! Two options:
+				</p>
+				<ul class="list-inside list-disc space-y-1 text-sm">
+					<li><strong>We print for you:</strong> Cost deducted from earnings (best for 3D-only projects)</li>
+					<li><strong>You build it:</strong> At your own cost (good for hardware + CAD combos)</li>
+				</ul>
+			</Accordion>
+			<Accordion text="Can I work on multiple projects?">
+				<p>
+					Yes, as long as each meets the 2-hour minimum. You can also continue working on existing projects (only hours logged after Construct starts count).
+				</p>
+			</Accordion>
+
+			<Accordion text="What happens if I commit hour inflation?">
+				<p>
+					It's not tolerated in Hack Club. You'll face indefinite ban from Construct and all future YSWS programs. If you believe you were banned unfairly, DM @Fraud Squad on Slack to appeal. Please don't fraud—it takes attention away from people doing honest work.
+				</p>
+			</Accordion>
+		</div>
+	</div><div class="mt-15 mb-30 flex flex-col items-center justify-center gap-5 px-10">
 	<h1 class="text-center text-3xl font-bold sm:text-4xl">Ready?</h1>
 	<div class="w-full max-w-2xl text-center">
 		{#if data.loggedIn}
