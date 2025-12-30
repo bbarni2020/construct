@@ -66,7 +66,7 @@ export async function load({ locals }) {
 		projects,
 		users,
 		currentlyPrinting,
-		currentUserId: locals.user.id
+		currentUserId: locals.user.id,
 		leaderboard
 	};
 }
