@@ -29,7 +29,7 @@ export const user = pgTable('user', {
 	shopScore: real().notNull().default(0),
 
 	hasBasePrinter: boolean().notNull().default(false),
-	// bricksSpentOnUpgrades: integer().notNull().default(0),
+	preferredBasePrinterId: integer().references(() => printer.id),
 
 	hasT1Review: boolean().notNull().default(false), // Has access to t1 review
 	hasT2Review: boolean().notNull().default(false), // Has access to t2 review
@@ -260,7 +260,60 @@ export const marketItemOrder = pgTable('market_item_order', {
 
 	status: marketOrderStatus().notNull().default('awaiting_approval'),
 	userNotes: text().notNull(),
-	notes: text(), // stuff like tracking code, shown to user
+	notes: text(),
+
+	deleted: boolean().notNull().default(false),
+	createdAt: timestamp().notNull().defaultNow()
+});
+
+export const printer = pgTable('printer', {
+	id: serial().primaryKey(),
+	createdBy: integer().references(() => user.id),
+
+	name: text().notNull(),
+	description: text().notNull(),
+	image: text().notNull(),
+
+	minRequiredShopScore: integer().notNull().default(0),
+
+	clayPrice: integer().notNull(),
+
+	minShopScore: integer().notNull(),
+	maxShopScore: integer().notNull(),
+	maxPrice: integer().notNull(),
+	minPrice: integer().notNull(),
+
+	requiresId: integer().references(() => printer.id),
+
+	isPublic: boolean().notNull().default(false),
+
+	deleted: boolean().notNull().default(false),
+	createdAt: timestamp().notNull().defaultNow(),
+	updatedAt: timestamp().notNull().defaultNow()
+});
+
+export const printerOrderStatus = pgEnum('printer_order_status', [
+	'awaiting_approval',
+	'fulfilled',
+	'denied',
+	'refunded'
+]);
+
+export const printerOrder = pgTable('printer_order', {
+	id: serial().primaryKey(),
+	userId: integer()
+		.references(() => user.id)
+		.notNull(),
+	printerId: integer()
+		.references(() => printer.id)
+		.notNull(),
+
+	addressId: text(),
+	bricksPaid: integer().notNull(),
+
+	status: printerOrderStatus().notNull().default('awaiting_approval'),
+	userNotes: text().notNull(),
+	notes: text(),
 
 	deleted: boolean().notNull().default(false),
 	createdAt: timestamp().notNull().defaultNow()
@@ -326,3 +379,5 @@ export type LegionReview = typeof legionReview.$inferSelect;
 export type T2Review = typeof t2Review.$inferSelect;
 
 export type MarketItem = typeof marketItem.$inferSelect;
+export type Printer = typeof printer.$inferSelect;
+export type PrinterOrder = typeof printerOrder.$inferSelect;
